@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form</title>
+</head>
+<body>
+    <h1>Formulaire Simple</h1>
+    <form method="POST" action="{% url 'resultat' %}">
+        {% csrf_token %}
+        <label for="resultat">Entrez quelque chose :</label>
+        <input type="text" id="resultat" name="resultat">
+        <button type="submit">Envoyer</button>
+    </form>
+
+    {% if resultat %}
+        <h2>resultat :</h2>
+        <p>{{ resultat }}</p>
+    {% endif %}
+</body>
+</html>
