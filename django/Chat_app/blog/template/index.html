@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire avec Bootstrap</title>
+    <!-- Lien vers Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .message-card {
+            border-left: 5px solid #007bff; /* Bordure à gauche pour un effet visuel */
+            margin-bottom: 10px; /* Espace entre les messages */
+            padding: 15px; /* Espace intérieur */
+            background-color: #f8f9fa; /* Couleur de fond légère */
+            border-radius: 5px; /* Coins arrondis */
+        }
+        .message-card:hover {
+            background-color: #e9ecef; /* Changement de couleur au survol */
+        }
+        .message-title {
+            color: #007bff; /* Couleur du titre */
+        }
+        .message-email {
+            color: #6c757d; /* Couleur du sous-titre */
+        }
+        .message-text {
+            color: #343a40; /* Couleur du texte */
+        }
+        .message-date {
+            color: #6c757d; /* Couleur de la date */
+            font-size: 0.9em; /* Taille de police réduite */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Formulaire</h1>
+        <form method="post" action="" class="mx-auto" style="max-width: 400px;">
+            {% csrf_token %} <!-- Ajoutez ceci pour la protection CSRF si vous utilisez Django -->
+
+            <!-- Champ Nom -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Nom :</label>
+                <input type="text" class="form-control" id="name" name="name" maxlength="100" required>
+            </div>
+
+            <!-- Champ Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email :</label>
+                <input type="email" class="form-control" id="email" name="email" maxlength="100" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="message" class="form-label">Message :</label>
+                <textarea name="message" id="message" cols="10" rows="4" class="form-control" required></textarea>
+            </div>
+            <!-- Bouton de soumission -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Soumettre</button>
+            </div>
+        </form>
+        <div class="container mt-5">
+            <div class="row">
+                {% if allMessage %}
+                    {% for message in allMessage %}
+                        <div class="col-12 mb-3"> <!-- Chaque message occupe toute la largeur -->
+                            <div class="message-card">
+                                <h5 class="message-title">{{ message.name }}</h5>
+                                <h6 class="message-email">{{ message.email }}</h6>
+                                <p class="message-text">{{ message.message }}</p>
+                                <p class="message-date">{{ message.date_published }}</p>
+                                <a href="/message/{{ message.id }}" class="btn btn-primary mt-2">Afficher</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <p class="text-center">Aucun message disponible.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    <!-- Lien vers Bootstrap JS (optionnel, pour les fonctionnalités avancées) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
